@@ -202,3 +202,11 @@ resetBtn.addEventListener("click", () => {
     filtersContainer.innerHTML = "";
     createFilters();
 });
+
+downloadBtn.addEventListener("click", () => {
+    if (!image) return;
+    const link = document.createElement("a");
+    link.download = `edited-${fileName}` || "edited-image.png";
+    link.href = imageCanvas.toDataURL();
+    link.click();
+});
