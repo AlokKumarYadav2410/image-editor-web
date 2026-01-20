@@ -1,71 +1,25 @@
-let filters = {
-    brightness: {
-        unit: "%",
-        value: 100,
-        min: 0,
-        max: 200,
-    },
-    contrast: {
-        unit: "%",
-        value: 100,
-        min: 0,
-        max: 200,
-    },
-    saturate: {
-        unit: "%",
-        value: 100,
-        min: 0,
-        max: 200,
-    },
-    hueRotation: {
-        unit: "deg",
-        value: 0,
-        min: 0,
-        max: 360,
-    },
-    blur: {
-        unit: "px",
-        value: 0,
-        min: 0,
-        max: 20,
-    },
-    grayscale: {
-        unit: "%",
-        value: 0,
-        min: 0,
-        max: 100,
-    },
-    sepia: {
-        unit: "%",
-        value: 0,
-        min: 0,
-        max: 100,
-    },
-    opacity: {
-        unit: "%",
-        value: 100,
-        min: 0,
-        max: 100,
-    },
-    invert: {
-        unit: "%",
-        value: 0,
-        min: 0,
-        max: 100,
-    },
-}
+import { createDefaultFilters } from "./filters.js";
+import { presets } from "./presets.js";
+
+let filters = createDefaultFilters();
 
 const imageCanvas = document.querySelector("#image-canvas");
 const imageInput = document.querySelector("#image-input");
 const canvasCtx = imageCanvas.getContext("2d");
 const resetBtn = document.querySelector("#reset-btn");
 const downloadBtn = document.querySelector("#download-btn");
+const presetsContainer = document.querySelector(".presets");
 
 let file = null;
 let image = null;
 let fileName = null;
 
 const filtersContainer = document.querySelector(".filters");
+
+const loader = document.querySelector(".loader");
+setTimeout(() => {
+    loader.style.display = "none";
+}, 1000);
 
 function createFilterElement(name, unit = "%", value, min, max) {
     const div = document.createElement("div");
@@ -113,7 +67,7 @@ imageInput.addEventListener("change", (e) => {
     placeholder.style.display = "none";
     const img = new Image();
     img.src = URL.createObjectURL(file);
-
+    resetBtn.click();
     img.onload = () => {
         image = img;
         imageCanvas.width = img.width;
@@ -141,62 +95,7 @@ function applyFilters() {
 }
 
 resetBtn.addEventListener("click", () => {
-    filters = {
-        brightness: {
-            unit: "%",
-            value: 100,
-            min: 0,
-            max: 200,
-        },
-        contrast: {
-            unit: "%",
-            value: 100,
-            min: 0,
-            max: 200,
-        },
-        saturate: {
-            unit: "%",
-            value: 100,
-            min: 0,
-            max: 200,
-        },
-        hueRotation: {
-            unit: "deg",
-            value: 0,
-            min: 0,
-            max: 360,
-        },
-        blur: {
-            unit: "px",
-            value: 0,
-            min: 0,
-            max: 20,
-        },
-        grayscale: {
-            unit: "%",
-            value: 0,
-            min: 0,
-            max: 100,
-        },
-        sepia: {
-            unit: "%",
-            value: 0,
-            min: 0,
-            max: 100,
-        },
-        opacity: {
-            unit: "%",
-            value: 100,
-            min: 0,
-            max: 100,
-        },
-        invert: {
-            unit: "%",
-            value: 0,
-            min: 0,
-            max: 100,
-        },
-    };
+    filters = createDefaultFilters();
 
     applyFilters();
     filtersContainer.innerHTML = "";
@@ -210,3 +109,20 @@ downloadBtn.addEventListener("click", () => {
     link.href = imageCanvas.toDataURL();
     link.click();
 });
+
+Object.keys(presets).forEach(presetsName => {
+    const presetButton = document.createElement("button");
+    presetButton.classList.add("preset-btn", "btn");
+    presetButton.innerText = presetsName.charAt(0).toUpperCase() + presetsName.slice(1);
+    presetsContainer.appendChild(presetButton);
+
+    presetButton.addEventListener("click", () => {
+        const preset = presets[presetsName];
+        Object.keys(preset).forEach(filterName => {
+            filters[filterName].value = preset[filterName];
+        });
+        applyFilters();
+        filtersContainer.innerHTML = "";
+        createFilters();
+    })
+})

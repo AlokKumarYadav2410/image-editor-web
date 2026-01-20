@@ -71,6 +71,39 @@ main section .top {
     gap: var(--gutter-md);
 }
 
+.loader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader .spinner{
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--bg-active-color);
+    border-top: 5px solid var(--bg-danger-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader p{
+    margin-left: var(--margin-md);
+    font-size: var(--font-size-lg);
+    color: var(--text-primary-color);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 main section .bottom {
     width: 100%;
     background: var(--bg-secondary-color);
@@ -99,12 +132,6 @@ main section .bottom .placeholder p {
     font-size: var(--font-size-md);
 }
 
-main section .bottom canvas {
-    max-width: 90%;
-    max-height: 80vh;
-    display: none;
-}
-
 main section .right .filters{
     display: flex;
     flex-direction: column;
@@ -114,6 +141,7 @@ main section .right .filters{
 main section .right .filter{
     width: 100%;
 }
+
 main section .right .filter input{
     margin-top: var(--margin-sm);
     width: 100%;
@@ -136,4 +164,25 @@ main section .right .filter input::-webkit-slider-runnable-track {
     background: var(--bg-active-color);
     height: 3px;
     border-radius: var(--border-radius-md);
+}
+
+canvas {
+    max-width: 90%;
+    max-height: 80vh;
+    display: none;
+}
+
+.presets{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--gutter-sm);
+}
+
+.preset-btn{
+    flex: 1 1 calc(50% - var(--gutter-sm));
+    /* flex: 1; */
+    background-color: rgb(0, 191, 255);
+    border: 3px solid rgb(0, 42, 55);
+    color: var(--text-primary-color);
 }
