@@ -18,45 +18,71 @@ html {
 
 main {
     width: 100%;
+    max-width: 2000px;
+    margin: auto;
 }
 
 main section {
     width: 100%;
     padding: var(--padding-lg) var(--padding-2xl);
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-areas:
+        "left center right";
     gap: var(--gutter-2xl);
+}
+
+section::selection {
+    background: var(--bg-active-color);
+    color: var(--text-active-color);
 }
 
 .btn {
     padding: var(--padding-sm) var(--padding-lg);
     border: none;
     outline: none;
+    font-size: var(--font-size-md);
     background: var(--bg-active-color);
     border-radius: var(--border-radius-sm);
     color: var(--text-active-color);
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-#reset-btn{
+.btn:hover {
+    background: var(--bg-secondary-color);
+    color: var(--text-primary-color);
+}
+
+.btn:active {
+    background: var(--bg-secondary-color);
+    color: var(--text-primary-color);
+    scale: 0.95;
+}
+
+#reset-btn {
     background: var(--bg-danger-color);
     color: var(--text-primary-color);
+    order: 1;
 }
 
-#download-btn{
+#download-btn {
     background: var(--bg-success-color);
     color: var(--text-primary-color);
+    order: 2;
 }
 
-main section .left{
+main section .right {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--gutter-lg);
-    width: 70%;
+    grid-area: center;
+    /* width: 70%; */
 }
 
-main section .right{
-    width: 30%;
+main section .left {
+    /* width: 30%; */
     background: var(--bg-secondary-color);
     padding: var(--padding-lg);
     border-radius: var(--border-radius-md);
@@ -64,14 +90,16 @@ main section .right{
     flex-direction: column;
     gap: var(--gutter-md);
     border: 2px solid var(--border-primary-color);
+    grid-area: left;
 }
 
 main section .top {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--gutter-md);
 }
 
-.loader{
+.loader {
     position: fixed;
     top: 0;
     left: 0;
@@ -84,7 +112,7 @@ main section .top {
     z-index: 9999;
 }
 
-.loader .spinner{
+.loader .spinner {
     width: 50px;
     height: 50px;
     border: 5px solid var(--bg-active-color);
@@ -93,15 +121,20 @@ main section .top {
     animation: spin 1s linear infinite;
 }
 
-.loader p{
+.loader p {
     margin-left: var(--margin-md);
     font-size: var(--font-size-lg);
     color: var(--text-primary-color);
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 main section .bottom {
@@ -113,8 +146,7 @@ main section .bottom {
     justify-content: center;
     align-items: center;
     color: var(--text-tertiary-color);
-    aspect-ratio: 5/3;
-    /* flex: 1; */
+    flex: 1;
 }
 
 main section .bottom .placeholder {
@@ -132,17 +164,19 @@ main section .bottom .placeholder p {
     font-size: var(--font-size-md);
 }
 
-main section .right .filters{
+main section .left .filters {
     display: flex;
     flex-direction: column;
     gap: var(--gutter-md);
+    transition: all 0.3s ease;
 }
 
-main section .right .filter{
+main section .left .filter {
     width: 100%;
+    transition: all 0.3s ease;
 }
 
-main section .right .filter input{
+main section .left .filter input {
     margin-top: var(--margin-sm);
     width: 100%;
     appearance: none;
@@ -150,7 +184,7 @@ main section .right .filter input{
     outline: none;
 }
 
-main section .right .filter input::-webkit-slider-thumb {
+main section .left .filter input::-webkit-slider-thumb {
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
@@ -160,7 +194,7 @@ main section .right .filter input::-webkit-slider-thumb {
     margin-top: -5.5px;
 }
 
-main section .right .filter input::-webkit-slider-runnable-track {
+main section .left .filter input::-webkit-slider-runnable-track {
     background: var(--bg-active-color);
     height: 3px;
     border-radius: var(--border-radius-md);
@@ -172,17 +206,42 @@ canvas {
     display: none;
 }
 
-.presets{
+.presets {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: var(--gutter-sm);
 }
 
-.preset-btn{
-    flex: 1 1 calc(50% - var(--gutter-sm));
-    /* flex: 1; */
-    background-color: rgb(0, 191, 255);
-    border: 3px solid rgb(0, 42, 55);
+.preset-btn {
+    width: 100%;
+    background-color: var(--bg-active-color);
+    border: 2px solid rgb(0, 42, 55);
+    color: var(--text-active-color);
+    word-break: break-all;
+    transition: all 0.3s ease;
+}
+
+.preset-btn:hover {
+    background-color: var(--bg-primary-color);
     color: var(--text-primary-color);
+    border-color: var(--border-secondary-color);
+}
+
+.preset-btn:active {
+    background-color: var(--bg-primary-color);
+    color: var(--text-primary-color);
+    border-color: var(--border-secondary-color);
+    scale: 0.9;
+}
+
+.sidebar-presets {
+    background: var(--bg-secondary-color);
+    padding: var(--padding-lg);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gutter-md);
+    border: 2px solid var(--border-primary-color);
+    grid-area: right;
 }
