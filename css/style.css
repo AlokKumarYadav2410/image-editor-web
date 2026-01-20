@@ -63,6 +63,7 @@ main section .right{
     display: flex;
     flex-direction: column;
     gap: var(--gutter-md);
+    border: 2px solid var(--border-primary-color);
 }
 
 main section .top {
@@ -80,7 +81,7 @@ main section .bottom {
     align-items: center;
     color: var(--text-tertiary-color);
     aspect-ratio: 5/3;
-    /* height: 80vh; */
+    /* flex: 1; */
 }
 
 main section .bottom .placeholder {
@@ -98,6 +99,12 @@ main section .bottom .placeholder p {
     font-size: var(--font-size-md);
 }
 
+main section .bottom canvas {
+    max-width: 90%;
+    max-height: 80vh;
+    display: none;
+}
+
 main section .right .filters{
     display: flex;
     flex-direction: column;
@@ -112,11 +119,6 @@ main section .right .filter input{
     width: 100%;
     appearance: none;
     border-radius: 3px;
-    /* -webkit-appearance: none;
-    background: var(--bg-primary-color);
-    border: 1px solid var(--border-primary-color);
-    border-radius: var(--border-radius-sm);
-    padding: var(--padding-sm) 0; */
     outline: none;
 }
 
