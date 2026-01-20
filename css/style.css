@@ -247,3 +247,59 @@ canvas {
     border: 2px solid var(--border-primary-color);
     grid-area: right;
 }
+
+.app-footer {
+    margin-top: var(--margin-md);
+    padding: var(--padding-lg) var(--padding-2xl);
+    border-top: 2px solid var(--border-primary-color);
+    background: var(--bg-secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gutter-md);
+}
+
+.app-footer p {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary-color);
+}
+
+.app-footer .author {
+    color: var(--text-primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.footer-cta {
+    display: flex;
+    gap: var(--gutter-sm);
+}
+
+.footer-btn {
+    font-size: var(--font-size-sm);
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--border-active-color);
+    text-decoration: none;
+}
+
+.footer-btn:hover {
+    background: var(--bg-secondary-color);
+    border: 1px solid var(--border-active-color);
+}
+
+.footer-btn.outline {
+    background: transparent;
+    border: 1px solid var(--border-secondary-color);
+    color: var(--text-primary-color);
+}
+
+.footer-btn.outline:hover {
+    background: var(--bg-primary-color);
+    border: 1px solid var(--border-active-color);
+}
+
+.author:hover {
+    color: var(--bg-danger-color);
+}

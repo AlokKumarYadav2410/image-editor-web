@@ -49,6 +49,16 @@
         order: 3;
     }
 
+    .app-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-cta {
+        width: 100%;
+        justify-content: center;
+    }
+
 }
 
 @media (max-width: 480px) {
