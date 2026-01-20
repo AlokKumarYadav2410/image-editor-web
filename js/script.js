@@ -18,8 +18,9 @@ const filtersContainer = document.querySelector(".filters");
 
 const loader = document.querySelector(".loader");
 setTimeout(() => {
-    loader.style.display = "none";
-}, 1000);
+    loader.classList.add("hidden");
+}, 1200);
+
 
 function createFilterElement(name, unit = "%", value, min, max) {
     const div = document.createElement("div");
