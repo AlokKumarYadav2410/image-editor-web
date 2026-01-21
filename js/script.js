@@ -1,6 +1,8 @@
 import { createDefaultFilters } from "./filters.js";
 import { presets } from "./presets.js";
 
+const MAX_SIZE = 1200;
+
 let filters = createDefaultFilters();
 
 const imageCanvas = document.querySelector("#image-canvas");
@@ -62,20 +64,36 @@ createFilters();
 
 imageInput.addEventListener("change", (e) => {
     file = e.target.files[0];
+    if (!file) return;
     fileName = file.name;
+
     const placeholder = document.querySelector(".placeholder");
     imageCanvas.style.display = "block";
     placeholder.style.display = "none";
+
     const img = new Image();
     img.src = URL.createObjectURL(file);
-    resetBtn.click();
+
     img.onload = () => {
         image = img;
-        imageCanvas.width = img.width;
-        imageCanvas.height = img.height;
-        canvasCtx.drawImage(img, 0, 0);
-    }
-})
+
+        let width = img.width;
+        let height = img.height;
+
+        if (width > MAX_SIZE || height > MAX_SIZE) {
+            const ratio = Math.min(MAX_SIZE / width, MAX_SIZE / height);
+            width *= ratio;
+            height *= ratio;
+        }
+
+        imageCanvas.width = width;
+        imageCanvas.height = height;
+
+        canvasCtx.drawImage(img, 0, 0, width, height);
+        resetBtn.click();
+    };
+});
+
 
 function applyFilters() {
     if (!image) return;
@@ -92,7 +110,7 @@ function applyFilters() {
     opacity(${filters.opacity.value}${filters.opacity.unit})
     invert(${filters.invert.value}${filters.invert.unit})`.trim();
 
-    canvasCtx.drawImage(image, 0, 0);
+    canvasCtx.drawImage(image, 0, 0, imageCanvas.width, imageCanvas.height);
 }
 
 resetBtn.addEventListener("click", () => {
